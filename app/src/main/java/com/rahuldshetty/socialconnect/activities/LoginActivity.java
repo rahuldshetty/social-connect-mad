@@ -90,5 +90,36 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        forgotPass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                progressBar.setVisibility(View.VISIBLE);
+                String email = emailFld.getText().toString();
+                if(!TextUtils.isEmpty(email)){
+
+                    mAuth.sendPasswordResetEmail(email).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful())
+                            {
+                                progressBar.setVisibility(View.INVISIBLE);
+                                Toast.makeText(LoginActivity.this,"Please check your inbox or spam folder for the password reset link.",Toast.LENGTH_SHORT).show();
+                            }
+                            else{
+                                Toast.makeText(LoginActivity.this,task.getException().getMessage(),Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.INVISIBLE);
+                            }
+
+                        }
+                    });
+
+                }else{
+                    Toast.makeText(LoginActivity.this,"Enter your email address in the Email Field.",Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                }
+
+            }
+        });
+
     }
 }
