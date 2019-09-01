@@ -33,7 +33,7 @@
         android:layout_marginBottom="24dp"
         android:backgroundTint="@color/transpwhite"
         android:ems="10"
-        android:hint=" Password"
+        android:hint="Password"
         android:inputType="textPassword"
         android:padding="20dp"
         android:textColor="#f0f0f0"
@@ -53,7 +53,7 @@
         android:layout_marginBottom="24dp"
         android:backgroundTint="@color/transpwhite"
         android:ems="10"
-        android:hint=" Email Address"
+        android:hint="Email Address"
         android:inputType="text|textEmailAddress"
         android:padding="20dp"
         android:textColor="#f0f0f0"
@@ -107,5 +107,19 @@
         app:layout_constraintBottom_toTopOf="@+id/login_forgot"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/arrow_right" />
+
+    <ProgressBar
+        android:id="@+id/logProgressBar"
+        style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:indeterminate="true"
+        android:theme="@style/progressBarBlue"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="invisible" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
