@@ -15,11 +15,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.rahuldshetty.socialconnect.MainActivity;
 import com.rahuldshetty.socialconnect.R;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -29,6 +36,7 @@ public class RegisterActivity extends AppCompatActivity {
     private ProgressBar progressBar;
 
     private FirebaseAuth mAuth;
+    private FirebaseFirestore userdb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +44,7 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         mAuth = FirebaseAuth.getInstance();
+        userdb = FirebaseFirestore.getInstance();
 
         nameFld = findViewById(R.id.reg_name);
         emailFld = findViewById(R.id.reg_email);
@@ -61,8 +70,8 @@ public class RegisterActivity extends AppCompatActivity {
 
                 progressBar.setVisibility(View.VISIBLE);
 
-                String name = nameFld.getText().toString();
-                String email = emailFld.getText().toString();
+                final String name = nameFld.getText().toString();
+                final String email = emailFld.getText().toString();
                 String pass = passFld.getText().toString();
                 String cpass = cpassFld.getText().toString();
 
@@ -78,7 +87,35 @@ public class RegisterActivity extends AppCompatActivity {
                             if(task.isSuccessful()){
                                 // sign up completed...
                                 // add info to database
-                                goToMain();
+                                String userId = mAuth.getCurrentUser().getUid();
+
+                                Map<String,Object> user = new HashMap<>();
+                                user.put("name",name);
+                                user.put("email",email);
+
+
+
+                                userdb.collection("APP")
+                                        .document("USERS")
+                                        .collection(userId)
+                                        .add(user)
+                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                            @Override
+                                            public void onSuccess(DocumentReference documentReference) {
+                                                goToMain();
+                                                progressBar.setVisibility(View.INVISIBLE);
+                                            }
+                                        })
+                                        .addOnFailureListener(new OnFailureListener() {
+                                            @Override
+                                            public void onFailure(@NonNull Exception e) {
+                                                Toast.makeText(RegisterActivity.this,"Account created but failed to connect to database.",Toast.LENGTH_SHORT).show();
+                                                progressBar.setVisibility(View.INVISIBLE);
+                                            }
+                                        });
+
+
+
                             }
                             else
                             {
