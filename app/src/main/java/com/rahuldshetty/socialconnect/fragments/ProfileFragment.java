@@ -107,6 +107,15 @@ public class ProfileFragment extends Fragment {
                             cityView.setText(city);
                             descView.setText(desc);
 
+                            //some layout hacks
+                            if(desc.equals("")){
+                                descView.setHeight(0);
+                            }
+                            if(city.equals(""))
+                            {
+                                cityView.setHeight(0);
+                            }
+
                             //TODO: FRIEND COUNT
                             //TODO: IMAGE LOADING
                             //TODO: POST DISPLAYING

@@ -92,6 +92,8 @@ public class RegisterActivity extends AppCompatActivity {
                                 Map<String,Object> user = new HashMap<>();
                                 user.put("name",name);
                                 user.put("email",email);
+                                user.put("city","Earth");
+                                user.put("desc","Hi, I am using Social Connect.");
 
 
 
