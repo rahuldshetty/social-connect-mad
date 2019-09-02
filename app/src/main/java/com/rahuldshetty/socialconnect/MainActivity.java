@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -30,6 +32,10 @@ import kotlin.jvm.functions.Function1;
 
 public class MainActivity extends AppCompatActivity {
 
+    public static Activity mainActivity;
+    public static Context mainContext;
+    public static String otherUserID="";
+
     private MeowBottomNavigation.Model addModel,userModel,searchModel,homeModel,notifModel;
     private MeowBottomNavigation navbar;
     private FrameLayout frameLayout;
@@ -47,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mainActivity = this;
+        mainContext = this.getApplicationContext();
 
         homeFragment = new HomeFragment();
         searchFragment = new SearchFragment();
@@ -78,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                         loadFragment(notificationFragment);
                         break;
                     case 5:
+                        otherUserID  = firebaseAuth.getCurrentUser().getUid();
                         loadFragment(profileFragment);
                         break;
                 }
