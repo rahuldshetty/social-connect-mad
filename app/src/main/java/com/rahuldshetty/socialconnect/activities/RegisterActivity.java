@@ -96,14 +96,12 @@ public class RegisterActivity extends AppCompatActivity {
                                 user.put("desc","Hi, I am using Social Connect.");
 
 
-
-                                userdb.collection("APP")
-                                        .document("USERS")
-                                        .collection(userId)
-                                        .add(user)
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                userdb.collection("USERS")
+                                        .document(userId)
+                                        .set(user)
+                                        .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
-                                            public void onSuccess(DocumentReference documentReference) {
+                                            public void onSuccess(Void aVoid) {
                                                 goToMain();
                                                 progressBar.setVisibility(View.INVISIBLE);
                                             }
