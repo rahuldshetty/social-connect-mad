@@ -1,6 +1,7 @@
 package com.rahuldshetty.socialconnect;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -10,14 +11,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.FrameLayout;
-import android.widget.Toast;
+
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
-import com.etebarian.meowbottomnavigation.MeowBottomNavigationCell;
-import com.etebarian.meowbottomnavigation.MeowBottomNavigationKt;
-import com.google.android.material.bottomappbar.BottomAppBar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.rahuldshetty.socialconnect.activities.LoginActivity;
@@ -39,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     private MeowBottomNavigation.Model addModel,userModel,searchModel,homeModel,notifModel;
     private MeowBottomNavigation navbar;
     private FrameLayout frameLayout;
+    private Toolbar toolbar;
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
@@ -62,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         addFragment = new AddFragment();
         notificationFragment = new NotificationFragment();
         profileFragment = new ProfileFragment();
+        toolbar = findViewById(R.id.main_toolbar);
 
         frameLayout = findViewById(R.id.main_frame);
         navbar = findViewById(R.id.main_nav_bar);
@@ -97,9 +96,18 @@ public class MainActivity extends AppCompatActivity {
 
         navbar.show(1,true);
         loadFragment(homeFragment);
+
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+
     }
 
-
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.toolbarmenu,menu);
+        return true;
+    }
 
     @Override
     protected void onResume() {
@@ -136,5 +144,32 @@ public class MainActivity extends AppCompatActivity {
         ft.replace(R.id.main_frame,fragment);
         ft.addToBackStack(null);
         ft.commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+
+        switch (item.getItemId()){
+
+            case R.id.toolbar_logout:
+                firebaseAuth.signOut();
+                Intent act = new Intent(MainActivity.this,MainActivity.class);
+                startActivity(act);
+                finish();
+                break;
+
+            case R.id.toolbar_message:
+                break;
+
+            case R.id.toolbar_settings:
+                break;
+
+
+
+            default: return false;
+        }
+        return true;
+
     }
 }
