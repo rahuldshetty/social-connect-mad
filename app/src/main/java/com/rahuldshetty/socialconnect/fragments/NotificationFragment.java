@@ -102,6 +102,9 @@ public class NotificationFragment extends Fragment {
                                     temp.add(docs.get(i));
                             }
 
+                            if(temp.size()==0)
+                                progressBar.setVisibility(View.INVISIBLE);
+
                             for(int i=0;i<temp.size();i++)
                             {
                                 storeData2Users(temp.get(i),i==temp.size()-1);

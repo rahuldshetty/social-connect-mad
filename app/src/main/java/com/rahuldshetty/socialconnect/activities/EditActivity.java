@@ -339,7 +339,7 @@ public class EditActivity extends AppCompatActivity {
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        inImage.compress(Bitmap.CompressFormat.JPEG, 25, bytes);
         String path = MediaStore.Images.Media.insertImage(MainActivity.mainContext.getContentResolver(), inImage, UUID.randomUUID().toString() + ".png", "drawing");
         return Uri.parse(path);
     }
