@@ -2,23 +2,18 @@
 
 # Screenshots
 
-![Login](https://raw.githubusercontent.com/rahuldshetty/social-connect-mad/master/screenshots/Screenshot_1567962833.png)
+<img src="https://raw.githubusercontent.com/rahuldshetty/social-connect-mad/master/screenshots/Screenshot_1567962833.png" width="400" height="790">
 
-![Register](https://raw.githubusercontent.com/rahuldshetty/social-connect-mad/master/screenshots/Screenshot_1567962837.png)
+<img src="https://raw.githubusercontent.com/rahuldshetty/social-connect-mad/master/screenshots/Screenshot_1567962837.png" width="400" height="790">
 
-![Home](https://raw.githubusercontent.com/rahuldshetty/social-connect-mad/master/screenshots/Screenshot_1567962877.png)
+<img src="https://raw.githubusercontent.com/rahuldshetty/social-connect-mad/master/screenshots/Screenshot_1567962877.png" width="400" height="790">
 
-![Context Menu](https://raw.githubusercontent.com/rahuldshetty/social-connect-mad/master/screenshots/Screenshot_1567962880.png)
+<img src="https://raw.githubusercontent.com/rahuldshetty/social-connect-mad/master/screenshots/Screenshot_1567962880.png" width="400" height="790">
 
-![Search](https://raw.githubusercontent.com/rahuldshetty/social-connect-mad/master/screenshots/Screenshot_1567962903.png)
+<img src="https://raw.githubusercontent.com/rahuldshetty/social-connect-mad/master/screenshots/Screenshot_1567962903.png" width="400" height="790">
 
-![Profile](https://raw.githubusercontent.com/rahuldshetty/social-connect-mad/master/screenshots/Screenshot_1567962911.png)
+<img src="https://raw.githubusercontent.com/rahuldshetty/social-connect-mad/master/screenshots/Screenshot_1567962911.png" width="400" height="790">
 
-![Added Friend](https://raw.githubusercontent.com/rahuldshetty/social-connect-mad/master/screenshots/Screenshot_1567962919.png)
+<img src="https://raw.githubusercontent.com/rahuldshetty/social-connect-mad/master/screenshots/Screenshot_1567962925.png" width="400" height="790">
 
-![Friend List](https://raw.githubusercontent.com/rahuldshetty/social-connect-mad/master/screenshots/Screenshot_1567962925.png)
-
-![Notification](https://raw.githubusercontent.com/rahuldshetty/social-connect-mad/master/screenshots/Screenshot_1567963036.png)
-
-![Notification](https://raw.githubusercontent.com/rahuldshetty/social-connect-mad/master/screenshots/Screenshot_1567963078.png)
-
+<img src="https://raw.githubusercontent.com/rahuldshetty/social-connect-mad/master/screenshots/Screenshot_1567963036.png" width="400" height="790">
