@@ -6,4 +6,9 @@
     <color name="colorStartBG">#EB3349</color>
     <color name="colorEndBG">#F45C43</color>
     <color name="transpwhite">#65F0F0F0</color>
+
+    <color name="yesColor">#66bb6a</color>
+    <color name="noColor">#d50000</color>
+    <color name="defaultProfile">#eeeeee</color>
+
 </resources>
