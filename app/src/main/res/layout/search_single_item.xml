@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:clickable="true"
+    app:cardCornerRadius="8dp"
+    android:layout_marginBottom="2dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
+    app:cardElevation="2dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/search_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:text="TextView"
+            android:textSize="18sp"
+            app:layout_constraintStart_toEndOf="@+id/search_single_profile_img"
+            app:layout_constraintTop_toTopOf="@+id/search_single_profile_img" />
+
+        <TextView
+            android:id="@+id/search_city"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="16dp"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/search_single_profile_img"
+            app:layout_constraintTop_toBottomOf="@+id/search_name"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/search_single_profile_img"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:src="@drawable/profile"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

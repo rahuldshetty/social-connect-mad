@@ -54,6 +54,7 @@ public class EditActivity extends AppCompatActivity {
     private Button saveBtn;
     private ProgressBar progressBar;
 
+    private String email = "";
     private Bitmap bgImage,profImage;
     private String name="",desc = "",city = "",imageLink="",bgImageLink="";
     private Uri bguri=null,pfuri=null;
@@ -118,6 +119,8 @@ public class EditActivity extends AppCompatActivity {
                 map.put("name",name);
                 map.put("desc",desc);
                 map.put("city",city);
+                map.put("email",email);
+                map.put("uid",firebaseAuth.getCurrentUser().getUid());
 
                 final StorageReference profileRef = storageReference.child("PROFILES/");
                 final StorageReference bgRef = storageReference.child("BG/");
@@ -238,6 +241,9 @@ public class EditActivity extends AppCompatActivity {
                             if(snapshot.contains("bgimage")){
                                 bgImageLink = snapshot.getString("bgimage");
                             }
+
+
+                            email = snapshot.getString("email");
 
                             nameView.setText(name);
                             cityView.setText(city);

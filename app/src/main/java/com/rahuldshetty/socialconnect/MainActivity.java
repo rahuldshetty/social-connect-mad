@@ -1,8 +1,10 @@
 package com.rahuldshetty.socialconnect;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
@@ -15,8 +17,12 @@ import android.widget.FrameLayout;
 
 
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.rahuldshetty.socialconnect.activities.LoginActivity;
 import com.rahuldshetty.socialconnect.fragments.AddFragment;
 import com.rahuldshetty.socialconnect.fragments.HomeFragment;
@@ -32,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
     public static Activity mainActivity;
     public static Context mainContext;
     public static String otherUserID="";
+    private static FragmentTransaction sft;
 
+    private FragmentTransaction ft;
     private MeowBottomNavigation.Model addModel,userModel,searchModel,homeModel,notifModel;
     private MeowBottomNavigation navbar;
     private FrameLayout frameLayout;
@@ -40,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth firebaseAuth;
     private FirebaseUser currentUser;
+    private FirebaseFirestore db;
 
     private HomeFragment homeFragment;
     private SearchFragment searchFragment;
@@ -51,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        sft = ft;
 
         mainActivity = this;
         mainContext = this.getApplicationContext();
@@ -115,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
+        db = FirebaseFirestore.getInstance();
 
         if(currentUser==null){
             // User is not logged in
@@ -140,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     void loadFragment(Fragment fragment){
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.main_frame,fragment);
         ft.addToBackStack(null);
         ft.commit();
@@ -170,6 +183,18 @@ public class MainActivity extends AppCompatActivity {
             default: return false;
         }
         return true;
-
     }
+
+
+    public static void loadUserFragment(){
+        if(otherUserID!=null){
+            // load fragment from other ui
+            sft = ((FragmentActivity)mainActivity).getSupportFragmentManager().beginTransaction();
+            ProfileFragment newProfile = new ProfileFragment();
+            sft.replace(R.id.main_frame,newProfile);
+            sft.addToBackStack(null);
+            sft.commit();
+        }
+    }
+
 }

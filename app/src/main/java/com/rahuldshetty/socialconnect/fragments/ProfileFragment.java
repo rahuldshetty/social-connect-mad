@@ -98,12 +98,13 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-
-        loadProfile();
-
-
-
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadProfile();
     }
 
     void loadProfile(){
@@ -153,11 +154,11 @@ public class ProfileFragment extends Fragment {
                             descView.setText(desc);
 
                             if(imageLink!=null){
-                                Glide.with(MainActivity.mainContext).load(imageLink).into(profileImageView);
+                                Glide.with(MainActivity.mainContext).load(imageLink).placeholder(R.drawable.profile).into(profileImageView);
                             }
 
                             if(bgImageLink!=null){
-                                Glide.with(MainActivity.mainContext).load(bgImageLink).into(backgroundImageView);
+                                Glide.with(MainActivity.mainContext).load(bgImageLink).placeholder(R.drawable.background_start).into(backgroundImageView);
                             }
 
 
