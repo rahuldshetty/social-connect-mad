@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.FriendListActivity"></activity>
+        <activity android:name=".activities.MessageActivity"></activity>
+        <activity android:name=".activities.MessageMenuActivity" />
+        <activity android:name=".activities.FriendListActivity" />
         <activity android:name=".activities.EditActivity" />
         <activity android:name=".activities.RegisterActivity" />
         <activity android:name=".activities.LoginActivity" />

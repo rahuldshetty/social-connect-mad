@@ -24,6 +24,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.rahuldshetty.socialconnect.activities.LoginActivity;
+import com.rahuldshetty.socialconnect.activities.MessageActivity;
+import com.rahuldshetty.socialconnect.activities.MessageMenuActivity;
 import com.rahuldshetty.socialconnect.fragments.AddFragment;
 import com.rahuldshetty.socialconnect.fragments.HomeFragment;
 import com.rahuldshetty.socialconnect.fragments.NotificationFragment;
@@ -55,6 +57,8 @@ public class MainActivity extends AppCompatActivity {
     private AddFragment addFragment;
     private NotificationFragment notificationFragment;
     private ProfileFragment profileFragment;
+
+    public static int loadOtherUser = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +129,13 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+        if(loadOtherUser == 1)
+        {
+            loadFragment(new ProfileFragment());
+            loadOtherUser = 0;
+            return;
+        }
+
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
@@ -173,6 +184,8 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.toolbar_message:
+                Intent menuact = new Intent(MainActivity.this, MessageMenuActivity.class);
+                startActivity(menuact);
                 break;
 
             case R.id.toolbar_settings:

@@ -16,11 +16,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.rahuldshetty.socialconnect.MainActivity;
 import com.rahuldshetty.socialconnect.R;
 import com.rahuldshetty.socialconnect.adapters.FriendGridAdapter;
 import com.rahuldshetty.socialconnect.modals.User;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class FriendListActivity extends AppCompatActivity {
@@ -94,6 +97,14 @@ public class FriendListActivity extends AppCompatActivity {
 
     }
 
+    class NameSort implements Comparator<User>{
+
+        @Override
+        public int compare(User o1, User o2) {
+            return o1.getName().toLowerCase().compareTo(o2.getName().toLowerCase());
+        }
+    }
+
     void storeFriendData(String uid, final boolean islast){
         db.collection("USERS")
                 .document(uid)
@@ -105,12 +116,21 @@ public class FriendListActivity extends AppCompatActivity {
                             DocumentSnapshot snapshot = task.getResult();
                             User user = snapshot.toObject(User.class);
                             users.add(user);
-
+                            if(islast)
+                                Collections.sort(users,new NameSort());
                             if(islast){
                                 progressBar.setVisibility(View.INVISIBLE);
                                 // show it to user
                                 adapter = new FriendGridAdapter(FriendListActivity.this,users);
                                 gridView.setAdapter(adapter);
+                                gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                        finish();
+                                        MainActivity.otherUserID = users.get(position).getUid();
+                                        MainActivity.loadOtherUser = 1;
+                                    }
+                                });
                             }
 
                         }

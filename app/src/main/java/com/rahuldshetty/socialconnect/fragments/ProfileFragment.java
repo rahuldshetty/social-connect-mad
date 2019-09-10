@@ -30,6 +30,7 @@ import com.rahuldshetty.socialconnect.MainActivity;
 import com.rahuldshetty.socialconnect.R;
 import com.rahuldshetty.socialconnect.activities.EditActivity;
 import com.rahuldshetty.socialconnect.activities.FriendListActivity;
+import com.rahuldshetty.socialconnect.activities.MessageActivity;
 
 import java.sql.Time;
 import java.util.Date;
@@ -53,6 +54,7 @@ public class ProfileFragment extends Fragment {
 
     private String uid,imageLink,bgImageLink;
     private String myUid,otherUid;
+    private String otherName,otherImage;
 
     private FirebaseFirestore userDatabase;
     private FirebaseAuth firebaseAuth;
@@ -120,7 +122,12 @@ public class ProfileFragment extends Fragment {
                         cancelFriendRequest();
                         break;
                     case "Message":
-                        //TODO: Message
+                        Intent activity = new Intent(MainActivity.mainActivity, MessageActivity.class);
+                        activity.putExtra("myUID",myUid);
+                        activity.putExtra("otherUID",otherUid);
+                        activity.putExtra("otherName",otherName);
+                        activity.putExtra("otherImage",otherImage);
+                        startActivity(activity);
                         break;
                 }
 
@@ -193,6 +200,7 @@ public class ProfileFragment extends Fragment {
 
                             if (snapshot.contains("name")) {
                                 name = snapshot.getString("name");
+                                otherName = name;
                             }
                             if (snapshot.contains("city")) {
                                 city = snapshot.getString("city");
@@ -214,6 +222,7 @@ public class ProfileFragment extends Fragment {
                             }
                             if(snapshot.contains("image")){
                                 imageLink = snapshot.getString("image");
+                                otherImage = imageLink;
                             }
                             if(snapshot.contains("bgimage")){
                                 bgImageLink = snapshot.getString("bgimage");
@@ -529,5 +538,4 @@ public class ProfileFragment extends Fragment {
         act.putExtra("UID",uid);
         startActivity(act);
     }
-
 }

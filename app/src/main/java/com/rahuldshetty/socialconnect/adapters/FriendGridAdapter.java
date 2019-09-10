@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.rahuldshetty.socialconnect.MainActivity;
 import com.rahuldshetty.socialconnect.R;
 import com.rahuldshetty.socialconnect.modals.User;
 
