@@ -122,8 +122,8 @@ public class EditActivity extends AppCompatActivity {
                 map.put("email",email);
                 map.put("uid",firebaseAuth.getCurrentUser().getUid());
 
-                final StorageReference profileRef = storageReference.child("PROFILES/");
-                final StorageReference bgRef = storageReference.child("BG/");
+                final StorageReference profileRef = storageReference.child("PROFILES/"+user.getUid()+".jpg");
+                final StorageReference bgRef = storageReference.child("BG/"+user.getUid()+".jpg");
 
                 profileRef.putFile(pfuri)
                         .addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {

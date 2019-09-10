@@ -148,6 +148,10 @@ public class MessageActivity extends AppCompatActivity {
                                                                                 if(task.isSuccessful())
                                                                                 {
                                                                                     newQuery = task.getResult().getDocuments().get(0);
+
+                                                                                    // TODO: ADD ALL USER
+
+
                                                                                     progressBar.setVisibility(View.INVISIBLE);
                                                                                 }
                                                                                 else{
