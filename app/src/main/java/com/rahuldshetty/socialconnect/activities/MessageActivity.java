@@ -73,7 +73,7 @@ public class MessageActivity extends AppCompatActivity {
 
         messageArrayList = new ArrayList<>();
 
-        myUID = getIntent().getStringExtra("myUID");
+
         otherUID = getIntent().getStringExtra("otherUID");
         otherName = getIntent().getStringExtra("otherName");
         otherImage = getIntent().getStringExtra("otherImage");
@@ -81,6 +81,8 @@ public class MessageActivity extends AppCompatActivity {
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseUser = firebaseAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
+
+        myUID = firebaseUser.getUid();
 
         recyclerView = findViewById(R.id.message_recycler);
         sendBtn = findViewById(R.id.message_send);

@@ -3,6 +3,24 @@ package com.rahuldshetty.socialconnect.modals;
 public class UserMessage {
 
     String image,name,uid,desc,timestamp;
+    long time;
+
+    public UserMessage(String image, String name, String uid, String desc, String timestamp, long time) {
+        this.image = image;
+        this.name = name;
+        this.uid = uid;
+        this.desc = desc;
+        this.timestamp = timestamp;
+        this.time = time;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
 
     public UserMessage(){
 

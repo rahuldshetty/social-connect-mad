@@ -1,6 +1,7 @@
 package com.rahuldshetty.socialconnect.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.rahuldshetty.socialconnect.R;
+import com.rahuldshetty.socialconnect.activities.MessageActivity;
+import com.rahuldshetty.socialconnect.activities.MessageMenuActivity;
 import com.rahuldshetty.socialconnect.modals.UserMessage;
 
 import java.util.ArrayList;
@@ -30,17 +33,30 @@ public class MenuMessageAdapter extends RecyclerView.Adapter{
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.sinlge_message_menu,parent,false);
         return new ViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
         UserMessage message = userMessages.get(position);
         ((ViewHolder)holder).name.setText(message.getName());
         ((ViewHolder)holder).timestamp.setText(message.getTimestamp());
         ((ViewHolder)holder).desc.setText(message.getDesc());
+
+        ((ViewHolder)holder).itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UserMessage msg = userMessages.get(position);
+                Intent act = new Intent(holder.itemView.getContext(), MessageActivity.class);
+                act.putExtra("otherUID",msg.getUid());
+                act.putExtra("otherName",msg.getName());
+                act.putExtra("otherImage",msg.getImage());
+                holder.itemView.getContext().startActivity(act);
+            }
+        });
+
         Glide.with(context).load(message.getImage()).placeholder(R.drawable.profile).into( ((ViewHolder)holder).imageView );
     }
 
