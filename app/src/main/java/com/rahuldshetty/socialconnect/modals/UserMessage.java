@@ -1,6 +1,8 @@
 package com.rahuldshetty.socialconnect.modals;
 
-public class UserMessage {
+import java.util.Comparator;
+
+public class UserMessage implements Comparable<UserMessage> {
 
     String image,name,uid,desc,timestamp;
     long time;
@@ -72,5 +74,10 @@ public class UserMessage {
         this.uid = uid;
         this.desc = desc;
         this.timestamp = timestamp;
+    }
+
+    @Override
+    public int compareTo(UserMessage o) {
+        return (int)(o.getTime() - this.getTime());
     }
 }

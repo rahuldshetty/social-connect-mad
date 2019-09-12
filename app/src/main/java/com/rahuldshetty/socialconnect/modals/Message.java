@@ -1,6 +1,6 @@
 package com.rahuldshetty.socialconnect.modals;
 
-public class Message {
+public class Message{
 
     public Message(){
 
@@ -38,7 +38,4 @@ public class Message {
 
     String msg,status;
     long timestamp;
-
-
-
 }

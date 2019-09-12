@@ -97,7 +97,7 @@ public class MessageActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
                 final String msg = editText.getText().toString();
                 if(!TextUtils.isEmpty(msg)){
-
+                    editText.setText("");
                     // Check if no view has focus:
                     View view = getCurrentFocus();
                     if (view != null) {
@@ -125,7 +125,7 @@ public class MessageActivity extends AppCompatActivity {
                                         map.put("msg",msg);
                                         map.put("timestamp",timestamp);
                                         map.put("status","recv");
-                                        editText.setText("");
+
 
                                         db.collection("MESSAGE")
                                                 .document(otherUID)
@@ -229,7 +229,6 @@ public class MessageActivity extends AppCompatActivity {
     }
 
     void getNewData(QuerySnapshot snapshots){
-        System.out.println(newQuery);
         if(newQuery==null)
             db.collection("MESSAGE")
                     .document(myUID)

@@ -56,8 +56,8 @@ public class MenuMessageAdapter extends RecyclerView.Adapter{
                 holder.itemView.getContext().startActivity(act);
             }
         });
-
-        Glide.with(context).load(message.getImage()).placeholder(R.drawable.profile).into( ((ViewHolder)holder).imageView );
+        if(message.getImage()!=null && message.getImage()!="")
+            Glide.with(context).load(message.getImage()).placeholder(R.drawable.profile).into( ((ViewHolder)holder).imageView );
     }
 
     @Override

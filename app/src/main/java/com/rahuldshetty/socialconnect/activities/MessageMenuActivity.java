@@ -43,6 +43,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nullable;
@@ -63,6 +64,9 @@ public class MessageMenuActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private FirebaseFunctions firebaseFunctions;
 
+
+    private boolean isResume = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +84,14 @@ public class MessageMenuActivity extends AppCompatActivity {
         myUid = firebaseUser.getUid();
 
         recyclerView = findViewById(R.id.message_menu_recycler);
+        LinearLayoutManager mgr = new LinearLayoutManager(MessageMenuActivity.this);
+        recyclerView.setLayoutManager(mgr);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                mgr.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
+        adapter = new MenuMessageAdapter(MessageMenuActivity.this,userMessages);
+        recyclerView.setAdapter(adapter);
 
     }
 
@@ -90,10 +102,10 @@ public class MessageMenuActivity extends AppCompatActivity {
     }
 
     void loadData(){
-        adapter = null;
         progressBar.setVisibility(View.VISIBLE);
         list.clear();
         userMessages.clear();
+        adapter.notifyDataSetChanged();
         Map<String, Object> data = new HashMap<>();
         data.put("foo", myUid);
         getCollections().addOnCompleteListener(new OnCompleteListener<String>() {
@@ -107,11 +119,12 @@ public class MessageMenuActivity extends AppCompatActivity {
                         for (int i=0; i<jsonArray.length(); i++) {
                             list.add( jsonArray.getString(i) );
                         }
+
                         // Have all users
                         // get top msg and user details.
                         for(int i=0;i<list.size();i++)
                         {
-                            getDetails(list.get(i),i==list.size()-1);
+                            getDetails(list.get(i),i == list.size()-1 );
                         }
 
                     }
@@ -126,14 +139,7 @@ public class MessageMenuActivity extends AppCompatActivity {
         });
     }
 
-    class TimestampSort implements Comparator<UserMessage>
-    {
 
-        @Override
-        public int compare(UserMessage o1, UserMessage o2) {
-            return Integer.parseInt((o2.getTime() - o1.getTime())+"");
-        }
-    }
 
     void getDetails(final String uid, final boolean isLast){
         db.collection("USERS")
@@ -173,18 +179,9 @@ public class MessageMenuActivity extends AppCompatActivity {
                                                 msg.setTimestamp(timestamp);
 
                                                 userMessages.add(msg);
-
+                                                adapter.notifyDataSetChanged();
                                                 if(isLast)
                                                 {
-                                                    // populate
-                                                    Collections.sort(userMessages,new TimestampSort());
-                                                    adapter = new MenuMessageAdapter(MessageMenuActivity.this,userMessages);
-                                                    LinearLayoutManager mgr = new LinearLayoutManager(MessageMenuActivity.this);
-                                                    recyclerView.setLayoutManager(mgr);
-                                                    DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
-                                                            mgr.getOrientation());
-                                                    recyclerView.addItemDecoration(dividerItemDecoration);
-                                                    recyclerView.setAdapter(adapter);
                                                     progressBar.setVisibility(View.INVISIBLE);
                                                 }
 
@@ -222,6 +219,7 @@ public class MessageMenuActivity extends AppCompatActivity {
                     }
                 });
     }
+
 
 
 }
