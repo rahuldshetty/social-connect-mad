@@ -31,6 +31,7 @@ import com.rahuldshetty.socialconnect.R;
 import com.rahuldshetty.socialconnect.activities.EditActivity;
 import com.rahuldshetty.socialconnect.activities.FriendListActivity;
 import com.rahuldshetty.socialconnect.activities.MessageActivity;
+import com.rahuldshetty.socialconnect.activities.PostListActivity;
 
 import java.sql.Time;
 import java.util.Date;
@@ -164,14 +165,14 @@ public class ProfileFragment extends Fragment {
         postImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: POST COUNT OPENER
+                showPosts();
             }
         });
 
         postCountView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+               showPosts();
             }
         });
 
@@ -254,18 +255,36 @@ public class ProfileFragment extends Fragment {
                                                 int friends_count = task.getResult().getDocuments().size();
                                                 friendCountView.setText(friends_count + "");
                                                 //TODO: POST COUNT DISPLAYING
-                                                if (firebaseAuth.getCurrentUser().getUid().equals(uid)) {
-                                                    // If same users.
-                                                    button2.setVisibility(View.INVISIBLE);
-                                                    button2.setEnabled(false);
-                                                    button.setText("Edit Account");
-                                                    progressBar.setVisibility(View.INVISIBLE);
-                                                }
+                                                friendDatabase.collection("POSTS")
+                                                        .whereEqualTo("uid",uid)
+                                                        .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                                        if(task.isSuccessful())
+                                                        {
+                                                            int count = task.getResult().getDocuments().size();
+                                                            postCountView.setText(count + "");
+                                                            if (firebaseAuth.getCurrentUser().getUid().equals(uid)) {
+                                                                // If same users.
+                                                                button2.setVisibility(View.INVISIBLE);
+                                                                button2.setEnabled(false);
+                                                                button.setText("Edit Account");
+                                                                progressBar.setVisibility(View.INVISIBLE);
+                                                            }
 
-                                                else{
-                                                    // they are different users
-                                                    handleFriends();
-                                                }
+                                                            else{
+                                                                // they are different users
+                                                                handleFriends();
+                                                            }
+                                                        }
+                                                        else{
+                                                            progressBar.setVisibility(View.INVISIBLE);
+                                                            Toast.makeText(MainActivity.mainContext, "Error loading. Please check your internet and try again.", Toast.LENGTH_SHORT).show();
+                                                        }
+                                                    }
+                                                });
+
+
 
 
                                             }
@@ -497,6 +516,44 @@ public class ProfileFragment extends Fragment {
                 });
     }
 
+    void openPostIntent(String otherID){
+        Intent act = new Intent(MainActivity.mainContext, PostListActivity.class);
+        act.putExtra("UID",otherID);
+        startActivity(act);
+    }
+
+    void showPosts(){
+        if(myUid.equals(otherUid))
+        {
+            openPostIntent(myUid);
+        }
+        else{
+            progressBar.setVisibility(View.VISIBLE);
+            friendDatabase.collection("FRIEND")
+                    .document("FRIEND")
+                    .collection(myUid)
+                    .document(otherUid)
+                    .get()
+                    .addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                            progressBar.setVisibility(View.INVISIBLE);
+                            if(task.isSuccessful())
+                            {
+                                DocumentSnapshot docs = task.getResult();
+                                if(docs.contains("status") && docs.getString("status").equals("friends"))
+                                    openPostIntent(otherUid);
+                                else{
+                                    Toast.makeText(MainActivity.mainContext,"You cannot access other's post list.",Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            else{
+                                Toast.makeText(MainActivity.mainContext,"Connection Error.",Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+        }
+    }
 
     void showFriends(){
 

@@ -1,15 +1,18 @@
 package com.rahuldshetty.socialconnect.fragments;
 
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,11 +36,13 @@ import com.rahuldshetty.socialconnect.MainActivity;
 import com.rahuldshetty.socialconnect.R;
 import com.rahuldshetty.socialconnect.activities.EditActivity;
 
+import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -235,7 +240,9 @@ public class AddFragment extends Fragment {
                     case LOAD_IMAGE:
                         // User selects bg image
                         imageView.setImageBitmap(selectedImage);
-                        imageData = imageUri;
+                        Bitmap bm=((BitmapDrawable)imageView.getDrawable()).getBitmap();
+                        Uri temp = getImageUri(bm);
+                        imageData = temp;
                         break;
                 }
 
@@ -253,4 +260,13 @@ public class AddFragment extends Fragment {
             Toast.makeText(MainActivity.mainContext, "You haven't picked Image",Toast.LENGTH_SHORT).show();
         }
     }
+
+
+    public Uri getImageUri(Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 25, bytes);
+        String path = MediaStore.Images.Media.insertImage(MainActivity.mainContext.getContentResolver(), inImage, UUID.randomUUID().toString() + ".png", "drawing");
+        return Uri.parse(path);
+    }
+
 }
