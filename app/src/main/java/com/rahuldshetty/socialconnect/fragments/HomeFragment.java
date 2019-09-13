@@ -85,6 +85,9 @@ public class HomeFragment extends Fragment {
     void loadData(){
         progressBar.setVisibility(View.VISIBLE);
 
+        if(myUid==null)
+            return;
+
 
         // get list of friends
         db.collection("FRIEND")

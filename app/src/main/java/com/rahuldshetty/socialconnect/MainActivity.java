@@ -65,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        checkLogin();
 
         sft = ft;
 
@@ -135,7 +136,11 @@ public class MainActivity extends AppCompatActivity {
             loadOtherUser = 0;
             return;
         }
+        checkLogin();
 
+    }
+
+    void checkLogin(){
         firebaseAuth = FirebaseAuth.getInstance();
         currentUser = firebaseAuth.getCurrentUser();
         db = FirebaseFirestore.getInstance();
