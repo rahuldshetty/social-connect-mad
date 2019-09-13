@@ -85,8 +85,11 @@ public class HomeFragment extends Fragment {
     void loadData(){
         progressBar.setVisibility(View.VISIBLE);
 
-        if(myUid==null)
+        if(myUid==null){
+            progressBar.setVisibility(View.VISIBLE);
             return;
+        }
+
 
 
         // get list of friends
@@ -196,16 +199,15 @@ public class HomeFragment extends Fragment {
                                     else
                                         post.setImage(null);
 
-                                    final boolean isLastPost = j == docs.size() -1 ;
-
                                     posts.add(post);
-                                    if(isLastPost && isLastUser)
-                                    {
-                                        // done loading.
-                                        progressBar.setVisibility(View.INVISIBLE);
-                                        adapter.notifyDataSetChanged();
-                                    }
                                 }
+                                if(isLastUser)
+                                {
+                                    // done loading.
+                                    progressBar.setVisibility(View.INVISIBLE);
+                                    adapter.notifyDataSetChanged();
+                                }
+
                             }
                             else{
                                 Toast.makeText(MainActivity.mainContext,"Loading failed.",Toast.LENGTH_SHORT).show();
