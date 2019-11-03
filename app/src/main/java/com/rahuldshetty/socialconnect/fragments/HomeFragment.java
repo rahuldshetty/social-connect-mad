@@ -96,6 +96,7 @@ public class HomeFragment extends Fragment {
         db.collection("FRIEND")
                 .document("FRIEND")
                 .collection(myUid)
+                .whereEqualTo("status","friends")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override

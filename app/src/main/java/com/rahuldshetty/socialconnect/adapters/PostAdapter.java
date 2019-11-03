@@ -86,6 +86,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.ViewHolder> {
                 Gson gson = new Gson();
                 Intent act = new Intent(context, PostActivity.class);
                 act.putExtra("post",gson.toJson(post));
+                act.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(act);
 
 
